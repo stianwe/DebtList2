@@ -1,5 +1,5 @@
-function recieveCallback (data) {
-	alert(data.data)
+function registerRecieveCallback (data) {
+	alert("Register " + (data.response == 1 ? "OK" : "failed") + ".");
 };
 
 function register(){
@@ -9,8 +9,7 @@ function register(){
 	var email = $("#email-input-field").val();
 	if (password == confirmPassword) {
 		var msg = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\", \"email\": \"" + email + "\"}";
-		console.log("Sending:", msg);
-		send("register.php", msg, recieveCallback);
+		send("register.php", msg, registerRecieveCallback);
 	}
 	else {
 		alert("Passwords does not match");

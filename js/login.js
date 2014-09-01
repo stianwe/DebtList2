@@ -1,4 +1,4 @@
-function recieveCallback (data) {
+function loginRecieveCallback (data) {
 	if (data.response == 1) {
 		alert("Login");
 	}
@@ -10,5 +10,5 @@ function recieveCallback (data) {
 function login(){
 	var username = $("#username-input-field").val();
 	var password = $("#password-input-field").val();
-	send("login.php", "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}", recieveCallback);
+	send("login.php", "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}", loginRecieveCallback);
 };
