@@ -1,6 +1,6 @@
 function loginRecieveCallback (data) {
 	if (data.response == 1) {
-		alert("Login");
+		$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
 	}
 	else {
 		alert("Login fail");

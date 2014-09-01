@@ -67,6 +67,20 @@
 				<a onclick="register()" data-icon="flat-checkmark" data-role="button" data-transition="flow">Register!</a></p>
 			</div>
 		</div>
+		
+		<!-- Front page -->
+		<div data-role="page" id="front-page">
+			<div data-role="header" data-theme="f">
+				<h1>Your debts</h1>
+			</div>
+			<div data-role="content" role="main" data-theme="c">
+				<ul data-role="listview" data-inset="true" id="front-page-debt-list">
+					<!-- List to be filled out when loading data -->
+					<li style="background-color:#E74C3C;color:white"><div class="ui-grid-a"><div class="ui-block-a">Arne:</div><div align="right" class="ui-block-c">1000</div></li>
+					<li style="background-color:#2ECC71;color:white"><div class="ui-grid-a"><div class="ui-block-a">Hans:</div><div align="right" class="ui-block-c">50</div></li>
+				</ul>
+			</div>
+		</div>
 
     </body>
 </html>
