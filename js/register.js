@@ -2,7 +2,7 @@ function recieveCallback (data) {
 	alert(data.data)
 };
 
-function test(){
+function register(){
 	var username = $("#register-username-input-field").val();
 	var password = $("#register-password-input-field").val();
 	var confirmPassword = $("#confirm-password-input-field").val();
