@@ -8,7 +8,9 @@ function register(){
 	var confirmPassword = $("#confirm-password-input-field").val();
 	var email = $("#email-input-field").val();
 	if (password == confirmPassword) {
-		send("register.php", "{username: " + username + ", password: " + password + ", email: " + email + "}", recieveCallback);
+		var msg = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\", \"email\": \"" + email + "\"}";
+		console.log("Sending:", msg);
+		send("register.php", msg, recieveCallback);
 	}
 	else {
 		alert("Passwords does not match");

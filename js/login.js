@@ -10,5 +10,5 @@ function recieveCallback (data) {
 function login(){
 	var username = $("#username-input-field").val();
 	var password = $("#password-input-field").val();
-	send("register.php", "{username: " + username + ", password: " + password + ", recieveCallback);
+	send("login.php", "{\"username\": \"" + username + "\", \"password\": \"" + password + "\", recieveCallback);
 };
