@@ -1,0 +1,9 @@
+Friend request:
+0. Requested
+1. Accepted
+2. Declined
+
+Debt:
+0. Requested
+1. Accepted
+2. Declined
