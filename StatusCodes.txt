@@ -7,3 +7,6 @@ Debt:
 0. Requested
 1. Accepted
 2. Declined
+3. Completed by requesting user
+4. Completed by other user
+5. Completed
