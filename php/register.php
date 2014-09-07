@@ -9,7 +9,6 @@
 	$password = $data->{"password"};
 	$email = $data->{"email"};
 	appendToFile("register_log.txt", "username={$username}, password={$password}, email={$email}");
-	//$status = "1";
-	$status = registerUser($username, $password, $email);
-	send($tmp[0], json_encode(array('response' => "{$status}", 'data' => "you sent: {$tmp[1]}")));
+	$id = registerUser($username, $password, $email);
+	send($tmp[0], json_encode(array('id' => "{$id}")));
 ?>

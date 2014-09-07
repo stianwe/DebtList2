@@ -13,13 +13,13 @@
 	
 	function verifyUser($username, $password) {
 		$mysqli = getMysqlInstance();
-		$verify = false;
+		$id = -1;
 		
 		// TODO Could be optimized, but beware of sql injection
 		if ($result = $mysqli->query("SELECT * FROM user")) {
 			while ($row = $result->fetch_assoc()) {
 				if ($row['username'] == $username and $row['password'] == $password) {
-					$verify = true;
+					$verify = $row['id'];
 					break;
 				}
 			}
@@ -37,14 +37,16 @@
 		$selectResult = $mysqli->query($selectQuery);
 		if ($selectResult->fetch_assoc()) {
 			$mysqli->close();
-			return false;
+			return -1;
 		}
 		
 		$insertQuery = "INSERT INTO user (username, password, email) VALUES (\"{$username}\", \"{$password}\", \"{$email}\")";
 		appendToFile("sql_log.txt", "should execute query: {$insertQuery}");
 		$mysqli->query($insertQuery);
+		$id = $mysqli->insert_id;
+		appendToFile("sql_log.txt", "Registered user with id={$id}");
 		$mysqli->close();
-		return true;
+		return $id;
 	}
 	
 ?>

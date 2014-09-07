@@ -1,8 +1,13 @@
 function registerRecieveCallback (data) {
-	alert("Register " + (data.response == 1 ? "OK" : "failed") + ".");
+	alert("Register " + (data.id != -1 ? "OK" : "failed") + ".");
+	if (data.id != -1) {
+		$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
+		console.log("Registered user with id", data.id);
+		window.userId = data.id;
+	}
 };
 
-function register(){
+function register() {
 	var username = $("#register-username-input-field").val();
 	var password = $("#register-password-input-field").val();
 	var confirmPassword = $("#confirm-password-input-field").val();

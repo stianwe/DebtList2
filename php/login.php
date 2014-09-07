@@ -9,6 +9,6 @@
 	$password = $data->{"password"};
 	appendToFile("login_log.txt", "username={$username}, password={$password}");
 	// Check username and password
-	$status = verifyUser($username, $password);
-	send($tmp[0], json_encode(array('response' => $status, 'data' => "you sent: {$tmp[1]}")));
+	$id = verifyUser($username, $password);
+	send($tmp[0], json_encode(array('id' => $id)));
 ?>

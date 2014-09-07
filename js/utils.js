@@ -10,4 +10,10 @@ function send(page, data, success) {
 		success		:	success,
 		error		:	function(a, b, c) { alert("ERROR! " + a + " " + b + " " + c); }
 	});
-}
+};
+
+function enterPostLogin(userId) {
+	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
+	window.userId = userId;
+	loadFriends();
+};

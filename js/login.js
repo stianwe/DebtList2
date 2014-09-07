@@ -1,6 +1,7 @@
 function loginRecieveCallback (data) {
-	if (data.response == 1) {
-		$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
+	if (data.id != -1) {
+		console.log("Logged in with id", data.id);
+		enterPostLogin(data.id);
 	}
 	else {
 		alert("Login fail");
