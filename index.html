@@ -83,7 +83,7 @@
 			</div>
 		</div>
 			
-		<!-- Add friend -->
+		<!-- Add friend page -->
 		<!-- Search automatically if user is in database -->
 		<div data-role="page" id="addfriend">
 			<div data-role="header" data-theme="f">
@@ -92,6 +92,18 @@
 			<div data-role="content" role="main" data-theme="f">
 				<input type="text" id="usernamefriend" placeholder="Search user name" />
 				<a onclick="addFriend()" data-icon="flat-checkmark" data-role="button" data-transition="flow">Add as friend!</a></p>
+			</div>
+		</div>
+			
+		<!-- View friends page -->
+		<div data-role="page" id="view-friends-page">
+			<div data-role="header" data-theme="f">
+				<h1>Your friends</h1>
+			</div>
+			<div data-role="content" role="main" data-theme="c">
+				<ul data-role="listview" data-inset="true" id="friends-list">
+					<!-- List to be filled out when loading friends -->
+				</ul>
 			</div>
 		</div>
 

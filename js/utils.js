@@ -17,7 +17,7 @@ function sendWithCredentials(page, data, success) {
 }
 
 function enterPostLogin(userId) {
-	$.mobile.changePage("#addfriend", { transition: "flow", changeHash: true });
+	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
 	window.userId = userId;
 	loadFriends();
 };
