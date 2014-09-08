@@ -13,7 +13,7 @@ function send(page, data, success) {
 };
 
 function enterPostLogin(userId) {
-	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
+	$.mobile.changePage("#addfriend", { transition: "flow", changeHash: true });
 	window.userId = userId;
 	loadFriends();
 };
