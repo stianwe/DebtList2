@@ -9,7 +9,7 @@ function loginRecieveCallback (data) {
 };
 
 function login(){
-	var username = $("#username-input-field").val();
-	var password = $("#password-input-field").val();
-	send("login.php", "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}", loginRecieveCallback);
+	window.username = $("#username-input-field").val();
+	window.password = $("#password-input-field").val();
+	sendWithCredentials("login.php", "{}", loginRecieveCallback);
 };

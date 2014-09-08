@@ -3,7 +3,6 @@
 	include "sql.php";
 	
 	$tmp = receive();
-	$data = $tmp[1];
 	$data = json_decode($tmp[1]);
 	$username = $data->{"username"};
 	$password = $data->{"password"};

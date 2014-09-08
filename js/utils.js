@@ -12,6 +12,10 @@ function send(page, data, success) {
 	});
 };
 
+function sendWithCredentials(page, data, success) {
+	send(page, "{\"username\": \"" + window.username + "\", \"password\": \"" + window.password + "\""  + (data.length > 2 ? ", " : "") + data.substring(1, data.length), success);
+}
+
 function enterPostLogin(userId) {
 	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
 	window.userId = userId;

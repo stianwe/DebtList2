@@ -10,43 +10,20 @@
 		$mysqli->query("SET NAMES 'utf8'");
 		return $mysqli;
 	}
-	
-	function verifyUser($username, $password) {
+
+	function getUserId($username) {
 		$mysqli = getMysqlInstance();
-		$id = -1;
-		
-		// TODO Could be optimized, but beware of sql injection
-		if ($result = $mysqli->query("SELECT * FROM user")) {
-			while ($row = $result->fetch_assoc()) {
-				if ($row['username'] == $username and $row['password'] == $password) {
-					$verify = $row['id'];
-					break;
-				}
+		$query = "SELECT id
+				  FROM user
+				  WHERE username=\"{$username}\"";
+		$userId = -1;
+		if ($res = $mysqli->query($query)) {
+			if ($row = $res->fetch_assoc()) {
+				$userId = $row["id"];
 			}
 		}
-		
 		$mysqli->close();
-		return $verify;
-	}
-	
-	function registerUser($username, $password, $email) {
-		$mysqli = getMysqlInstance();
-		// Check that username and/or email is  available
-		$selectQuery = "SELECT id FROM user WHERE username=\"{$username}\" OR email=\"{$email}\"";
-		appendToFile("sql_log.txt", "should execute query: {$selectQuery}");
-		$selectResult = $mysqli->query($selectQuery);
-		if ($selectResult->fetch_assoc()) {
-			$mysqli->close();
-			return -1;
-		}
-		
-		$insertQuery = "INSERT INTO user (username, password, email) VALUES (\"{$username}\", \"{$password}\", \"{$email}\")";
-		appendToFile("sql_log.txt", "should execute query: {$insertQuery}");
-		$mysqli->query($insertQuery);
-		$id = $mysqli->insert_id;
-		appendToFile("sql_log.txt", "Registered user with id={$id}");
-		$mysqli->close();
-		return $id;
+		return $userId;
 	}
 	
 ?>
