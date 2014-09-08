@@ -1,7 +1,12 @@
 Friend request:
-0. Requested
-1. Accepted
-2. Declined
+-5. Self add error
+-4. SQL error
+-3. User not found
+-2. Invalid user credentials
+-1. Friend request successfully created
+0.  Requested
+1.  Accepted
+2.  Declined
 
 Debt:
 0. Requested
