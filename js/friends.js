@@ -54,6 +54,7 @@ function fillFriendsListHelper(list, dividerText) {
 };
 
 function fillFriendsList(friends) {
+	$("#friends-list").empty();
 	var acceptedFriends = [];
 	var incomingInvites = [];
 	var outgoingInvites = [];

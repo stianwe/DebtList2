@@ -2,7 +2,7 @@
 function send(page, data, success) {
 	$.ajax({
 		type		:	"GET",
-		url			:	"http://192.168.0.111/php/" + page,
+		url			:	"http://192.168.0.105/php/" + page,
 		data		:	"data=" + data,
 		dataType	:	"jsonp",
 		jsonp		:	"callback",
@@ -14,10 +14,29 @@ function send(page, data, success) {
 
 function sendWithCredentials(page, data, success) {
 	send(page, "{\"username\": \"" + window.username + "\", \"password\": \"" + window.password + "\""  + (data.length > 2 ? ", " : "") + data.substring(1, data.length), success);
-}
+};
+
+function swipe(event) {
+	//alert("Swiped: " + event.type);
+	if (event.type == "swipeleft") {
+		if (window.currentPage == "#front-page") {
+			window.currentPage = "#view-friends-page";
+			loadFriends();
+			$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
+		}
+	} else if (event.type == "swiperight") {
+		if (window.currentPage == "#view-friends-page") {
+			window.currentPage = "#front-page";
+			$.mobile.changePage("#front-page", { transition: "flow", changeHash: true, reverse: true });
+		}
+	} else {
+		console.log("Unexpected event: " + event.type);
+	}
+};
 
 function enterPostLogin(userId) {
-	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
+	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
+	window.currentPage = "#front-page";
 	window.userId = userId;
-	loadFriends();
+	$(document).on("swiperight swipeleft", swipe);
 };
