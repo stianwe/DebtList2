@@ -16,13 +16,17 @@ function sendWithCredentials(page, data, success) {
 	send(page, "{\"username\": \"" + window.username + "\", \"password\": \"" + window.password + "\""  + (data.length > 2 ? ", " : "") + data.substring(1, data.length), success);
 };
 
+function showFriends() {
+	window.currentPage = "#view-friends-page";
+	loadFriends();
+	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
+};
+
 function swipe(event) {
 	//alert("Swiped: " + event.type);
 	if (event.type == "swipeleft") {
 		if (window.currentPage == "#front-page") {
-			window.currentPage = "#view-friends-page";
-			loadFriends();
-			$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
+			showFriends();
 		}
 	} else if (event.type == "swiperight") {
 		if (window.currentPage == "#view-friends-page") {

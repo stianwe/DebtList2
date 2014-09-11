@@ -44,12 +44,12 @@ function addFriend() {
 	sendWithCredentials("create_friend_request.php", "{\"toUserUsername\": \"" + username + "\"}", addFriendCallback);
 };
 
-function fillFriendsListHelper(list, dividerText) {
+function fillFriendsListHelper(list, dividerText, shouldHaveAcceptAndDecline) {
 	if (list.length > 0) {
 		$("#friends-list").append("<li data-role='list-divider' data-theme='f'>" + dividerText + "</li>");
 	}
 	list.forEach(function (friend) {
-		$("#friends-list").append("<li>" + friend.username + "<div onclick='alert(\"TEST\");' class='ui-icon ui-icon-delete' style='color:black;float:right'></div><div onclick='alert(\"TEST\");' class='ui-icon ui-icon-check' style='color:black;float:right'></div></li>");
+		$("#friends-list").append("<li>" + friend.username + (shouldHaveAcceptAndDecline ? "<div onclick='respondToFriendRequest(" + friend.id + ", 2);' class='ui-icon ui-icon-delete' style='color:black;float:right'></div><div onclick='respondToFriendRequest(" + friend.id + ", 1)' class='ui-icon ui-icon-check' style='color:black;float:right'></div>" : "") + "</li>");
 	});
 };
 
@@ -82,8 +82,23 @@ function fillFriendsList(friends) {
 		}
 	}
 	// Display the friends
-	fillFriendsListHelper(incomingInvites, "Incoming friend requests:");
-	fillFriendsListHelper(acceptedFriends, "Your friends:");
-	fillFriendsListHelper(outgoingInvites, "Outgoing friend requests:");
+	fillFriendsListHelper(incomingInvites, "Incoming friend requests:", true);
+	fillFriendsListHelper(acceptedFriends, "Your friends:", false);
+	fillFriendsListHelper(outgoingInvites, "Outgoing friend requests:", false);
 	$("#friends-list").listview("refresh");
+};
+
+function respondToFriendRequestCallback(data) {
+	if (data.response == 0) {
+		alert("OK");
+		$.getScript("js/utils.js", function() {
+			showFriends();
+		});
+	} else {
+		alert("An error occurred. Error code: " + data.response);
+	}
+};
+
+function respondToFriendRequest(friendRequestId, response) {
+	sendWithCredentials("friend_response.php", "{\"friendRequestId\": \"" + friendRequestId + "\", \"response\": \"" + response + "\"}", respondToFriendRequestCallback);
 };

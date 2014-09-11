@@ -8,6 +8,8 @@
 	define("USER_NOT_FOUND", -3);
 	define("SQL_ERROR", -4);
 	define("SELF_ADD_ERROR", -5);
+	define("WRONG_USER_ERROR", -6);
+	define("INVALID_STATUS_CODE", -7);
 
 	function loadFriends($userId) {
 		$mysqli = getMysqlInstance();
@@ -58,6 +60,35 @@
 			// TODO
 			return SQL_ERROR;
 		}
+	}
+
+	function respondToFriendRequest($friendRequestId, $response, $respondingUser) {
+		if ($response != 1 && $response != 2) {
+			// Only options are to accept or decline a friend request
+			appendToFile("friend_response_log.txt", "User with id={$respondingUser} attempted to respond to friend request with id={$friendRequestId} with response={$response}");
+			return INVALID_STATUS_CODE;
+		}
+		$mysqli = getMysqlInstance();
+		$query = "UPDATE friendRequest SET status=\"" . ($response == 1 ? 1 : 0) . "\" WHERE id=\"{$friendRequestId}\"";
+		// Check that the friend request is actually to the user trying to respond to it
+		$verifyQuery = "SELECT otherUser FROM friendRequest WHERE id=\"{$friendRequestId}\"";
+		if ($verifyRes = $mysqli->query($verifyQuery)) {
+			if ($row = $verifyRes->fetch_assoc()) {
+				$otherUserId = $row["otherUser"];
+				if ($otherUserId != $respondingUser) {
+					return WRONG_USER_ERROR;
+				} else {
+					$mysqli->query($query);
+					appendToFile("friend_response_log.txt", $query . " from user with id={$respondingUser}");
+					return 0;
+				}
+			} else {
+				return USER_NOT_FOUND;
+			}
+		} else {
+			return SQL_ERROR;
+		}
+		return 0;
 	}
 
 ?>
