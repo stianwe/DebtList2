@@ -2,7 +2,7 @@
 function send(page, data, success) {
 	$.ajax({
 		type		:	"GET",
-		url			:	"http://192.168.0.105/php/" + page,
+		url			:	"http://192.168.0.100/php/" + page,
 		data		:	"data=" + data,
 		dataType	:	"jsonp",
 		jsonp		:	"callback",
