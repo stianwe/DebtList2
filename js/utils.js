@@ -22,16 +22,20 @@ function showFriends() {
 	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
 };
 
+function showDebts(reverseTransition) {
+	window.currentPage = "#front-page";
+	loadDebts();
+	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true, reverse: reverseTransition });
+};
+
 function swipe(event) {
-	//alert("Swiped: " + event.type);
 	if (event.type == "swipeleft") {
 		if (window.currentPage == "#front-page") {
 			showFriends();
 		}
 	} else if (event.type == "swiperight") {
 		if (window.currentPage == "#view-friends-page") {
-			window.currentPage = "#front-page";
-			$.mobile.changePage("#front-page", { transition: "flow", changeHash: true, reverse: true });
+			showDebts(true);
 		}
 	} else {
 		console.log("Unexpected event: " + event.type);
@@ -39,8 +43,7 @@ function swipe(event) {
 };
 
 function enterPostLogin(userId) {
-	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true });
-	window.currentPage = "#front-page";
 	window.userId = userId;
+	showDebts(false);
 	$(document).on("swiperight swipeleft", swipe);
 };
