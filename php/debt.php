@@ -3,6 +3,8 @@
 	include "utils.php";
 	include "sql.php";
 
+	define("INVALID_USER_CREDENTIALS", -5);
+	define("UNKOWN_STATUS", -4);
 	define("SQL_ERROR", -3);
 	define("NOT_PERMITTED", -2);
 	define("DEBT_NOT_FOUND", -1);
@@ -31,6 +33,10 @@
 		return $debts;
 	}
 
+	function verifyAcceptDecline($requestingUser, $userId, $fromUser, $toUser, $oldStatus) {
+		return ($requestingUser != $userId && ($fromUser == $userId || $toUser == $userId)) && $oldStatus == REQUESTED;
+	}
+
 	function changeStatusOfDebt($debtId, $newStatus, $userId) {
 		$mysql = getMysqlInstance();
 		$response = 0;
@@ -44,29 +50,46 @@
 				$requestingUser = $row["requestingUser"];
 				switch ($newStatus) {
 					case ACCEPTED:
+						if (!verifyAcceptDecline($requestingUser, $userId, $fromUser, $toUser, $oldStatus)) {
+							$response = NOT_PERMITTED;
+							break;
+						}
 						// TODO: MERGE DEBTS
+						break;
 					case DECLINED:
-						if (!($requestingUser != $userId && ($fromUser == $userId || $toUser == $userId))) {
+						if (!verifyAcceptDecline($requestingUser, $userId, $fromUser, $toUser, $oldStatus)) {
 							$response = NOT_PERMITTED;
 						}
 						break;
 					case COMPLETED_BY_REQUESTING_USER:
-						if ($requestingUser != $userId) {
+						if ($requestingUser != $userId || !($oldStatus == ACCEPTED || $oldStatus == COMPLETED_BY_OTHER_USER)) {
 							$response = NOT_PERMITTED;
 						}
 						// We need to check if other user has completed it
 						else if ($oldStatus == COMPLETED_BY_OTHER_USER) {
-							$status = COMPLETED;
+							$newStatus = COMPLETED;
 						}
 						break;
 					case COMPLETED_BY_OTHER_USER:
-						if (!($requestingUser != $userId && ($fromUser == $userId || $toUser == $userId))) {
+						if (!($requestingUser != $userId && ($fromUser == $userId || $toUser == $userId)) || 
+							!($oldStatus == ACCEPTED || $oldStatus == COMPLETED_BY_REQUESTING_USER)) {
 							$response = NOT_PERMITTED;
 						}
 						// We need to check if requesting user has completed it
-						else if ($status == $COMPLETED_BY_REQUESTING_USER) {
-							$status = COMPLETED;
+						else if ($oldStatus == $COMPLETED_BY_REQUESTING_USER) {
+							$newStatus = COMPLETED;
 						}
+						break;
+					default:
+						$response = UNKOWN_STATUS;
+				}
+				// Update status if valid so far
+				if ($response >= 0) {
+					$updateStatusQuery = "UPDATE debt
+										  SET status=\"{$newStatus}\"
+										  WHERE id=\"{$debtId}\"";
+					$mysql->query($updateStatusQuery);
+					$response = $newStatus;
 				}
 			} else {
 				$response = DEBT_NOT_FOUND;
