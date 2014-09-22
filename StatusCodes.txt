@@ -9,6 +9,8 @@ Friend request:
  2.  Declined
 
 Debt:
+-5. Invalid user credentials
+-4. Unkown status
 -3. SQL error
 -2. Not permitted
 -1. Debt not found
