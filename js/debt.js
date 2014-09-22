@@ -2,7 +2,7 @@ var OUTGOING_DEBT_COLOR = "#2ECC71";
 var INCOMING_DEBT_COLOR = "#E74C3C";
 
 function loadDebtsCallback(data) {
-	console.log("friends:", data.debts);
+	console.log("Debts:", data.debts);
 	fillDebtList(data.debts);
 };
 
@@ -26,7 +26,7 @@ function fillDebtListHelper(list, dividerText) {
 };
 
 function fillDebtList(debts) {
-	//$("#front-page-debt-list").empty();
+	$("#front-page-debt-list").empty();
 	var accepted = [];
 	var incoming = [];
 	var outgoing = [];
