@@ -9,9 +9,12 @@ Friend request:
  2.  Declined
 
 Debt:
-0. Requested
-1. Accepted
-2. Declined
-3. Completed by requesting user
-4. Completed by other user
-5. Completed
+-3. SQL error
+-2. Not permitted
+-1. Debt not found
+0.  Requested
+1.  Accepted
+2.  Declined
+3.  Completed by requesting user
+4.  Completed by other user
+5.  Completed
