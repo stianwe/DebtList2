@@ -22,10 +22,12 @@ function showFriends() {
 	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
 };
 
-function showDebts(reverseTransition) {
-	window.currentPage = "#front-page";
+function showDebts(reverseTransition, isNotPageChange) {
 	loadDebts();
-	$.mobile.changePage("#front-page", { transition: "flow", changeHash: true, reverse: reverseTransition });
+	if (!isNotPageChange) {
+		window.currentPage = "#front-page";
+		$.mobile.changePage("#front-page", { transition: "flow", changeHash: true, reverse: reverseTransition });
+	}
 };
 
 function swipe(event) {
