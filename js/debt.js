@@ -11,9 +11,11 @@ function loadDebts() {
 };
 
 function createDebtListElement(debt) {
-	return "<li style=\"background-color:" + (debt.toUser == window.userId ? INCOMING_DEBT_COLOR : OUTGOING_DEBT_COLOR) +
+	return "<li onclick=\"alert('TEST');\" style=\"background-color:" + (debt.toUser == window.userId ? INCOMING_DEBT_COLOR : OUTGOING_DEBT_COLOR) +
 		   ";color:white\"><div class=\"ui-grid-a\"><div class=\"ui-block-a\">" + debt.otherUsername + "</div>" +
-		   "<div align=\"right\" class=\"ui-block-c\">" + debt.amount + " " + debt.what + "</div></li>";
+		   "<div align=\"right\" class=\"ui-block-c\">" + debt.amount + " " + debt.what + "</div><br />" + 
+		   "<div style=\"text-decoration:none; font-weight:normal; font-style:italic;\">" + debt.comment + "</div>" + 
+		   "</li>";
 };
 
 function fillDebtListHelper(list, dividerText) {
