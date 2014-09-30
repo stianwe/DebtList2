@@ -74,6 +74,7 @@
 		<div data-role="page" id="front-page">
 			<div data-role="header" data-theme="f">
 				<h1>Your debts</h1>
+				<a data-iconpos="notext" href="#add-debt-page" data-role="button" data-icon="flat-plus" class="ui-btn-right"></a>
 			</div>
 			<div data-role="content" role="main" data-theme="c">
 				<ul data-role="listview" data-inset="true" id="front-page-debt-list">
@@ -83,6 +84,22 @@
 					<li style="background-color:#2ECC71;color:white"><div class="ui-grid-a"><div class="ui-block-a">Hans:</div><div align="right" class="ui-block-c">50</div></li>
 					<!-- -->
 				</ul>
+			</div>
+		</div>
+			
+		<!-- Add debt page -->
+		<div data-role="page" id="add-debt-page">
+			<div data-role="header" data-theme="f">
+				<h1>Create debt</h1>
+			</div>
+			<div data-role="content" role="main" data-theme="f">
+				<select id="add-debt-friend">
+					<!-- To be filled out with accepted friends -->
+				</select>
+				<input type="number" id="add-debt-amount" placeholder="Amount" />
+				<input type="text" id="add-debt-what" placeholder="What" />
+				<input type="text" id="add-debt-comment" placeholder="Comment" />
+				<a onclick="alert(\"TEST\");" data-icon="flat-checkmark" data-role="button" data-transition="flow">Create debt</a></p>
 			</div>
 		</div>
 			
