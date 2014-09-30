@@ -109,3 +109,14 @@ function respondToDebtCallback(data) {
 function respondToDebt(debtId, response) {
 	sendWithCredentials("debt_response.php", "{\"debtId\": \"" + debtId + "\", \"newStatus\": \"" + response + "\"}", respondToDebtCallback);
 };
+
+function initAddDebt() {
+	// Fill the select (dropdown) with friends
+	loadFriends(function (friends) {
+		friends.forEach(function (friend) {
+			if (parseInt(friend.status) == 1) {
+				$("#add-debt-friend").append("<option value=\"" + friend.id + "\">" + friend.username + "</option>");
+			}
+		});
+	});
+};

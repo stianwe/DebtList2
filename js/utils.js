@@ -17,7 +17,7 @@ function sendWithCredentials(page, data, success) {
 };
 
 function showFriends() {
-	loadFriends();
+	showFriendsHelper();
 	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
 };
 

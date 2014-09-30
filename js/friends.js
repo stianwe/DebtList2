@@ -1,10 +1,14 @@
-function loadFriendsCallback(data) {
-	console.log("Friends:", data.friends);
-	fillFriendsList(data.friends);
+function loadFriendsCallback(friends) {
+	console.log("Friends:", friends);
+	fillFriendsList(friends);
 };
 
-function loadFriends() {
-	sendWithCredentials("load_friends.php", "{}", loadFriendsCallback);
+function loadFriends(callback) {
+	sendWithCredentials("load_friends.php", "{}", function (data) { callback(data.friends); });
+};
+
+function showFriendsHelper() {
+	loadFriends(loadFriendsCallback);
 };
 
 function addFriendCallback(data) {
