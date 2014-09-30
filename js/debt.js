@@ -120,3 +120,38 @@ function initAddDebt() {
 		});
 	});
 };
+
+function addDebtCallback(data) {
+	console.log("DATA: ", data);
+};
+
+function addDebt() {
+	var friendId = $("#add-debt-friend").val();
+	if (friendId == "") {
+		alert("Please select a friend.");
+		return;
+	}
+	console.log("FriendId=", friendId);
+	var toUserFromOther;
+	if ($("#radio-to-user").prop("checked")) {
+		toUserFromOther = true;
+	} else if ($("#radio-to-other").prop("checked")) {
+		toUserFromOther = false;
+	} else {
+		alert("Please select who should receive the payment.")
+		return;
+	}
+	var amount = $("#add-debt-amount").val();
+	if (amount == "") {
+		alert("Please enter a number as amount.");
+		return;
+	}
+	var what = $("#add-debt-what").val();
+	if (what == "") {
+		alert("Please enter something in the what-field, for instance \"$\", \"beer\" or \"burger\"");
+	}
+	var comment = $("#add-debt-comment").val();
+	sendWithCredentials("create_debt.php", '{"amount": "' + amount + '", "what": "' + what + '", "comment": "' + comment + 
+		'", "fromUser": "' + (toUserFromOther ? friendId : window.userId) + '", "toUser": "' + (toUserFromOther ? window.userId : friendId) + '"}',
+		addDebtCallback);
+};

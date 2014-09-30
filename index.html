@@ -98,10 +98,16 @@
 					<option value="" disabled selected>Select friend</option>
 					<!-- To be filled out with accepted friends -->
 				</select>
+				<fieldset data-role="controlgroup">
+					<input type="radio" name="to" value="user" id="radio-to-user">
+					<label for="radio-to-user">To me from friend</label>
+					<input type="radio" name="to" value="other" id="radio-to-other">
+					<label for="radio-to-other">From me to friend</label>
+				</fieldset>
 				<input type="number" id="add-debt-amount" placeholder="Amount" />
 				<input type="text" id="add-debt-what" placeholder="What" />
-				<input type="text" id="add-debt-comment" placeholder="Comment" />
-				<a onclick="alert(\"TEST\");" data-icon="flat-checkmark" data-role="button" data-transition="flow">Create debt</a></p>
+				<input type="text" id="add-debt-comment" placeholder="Comment (optional)" />
+				<a onclick="addDebt();" data-icon="flat-checkmark" data-role="button" data-transition="flow">Create debt</a></p>
 			</div>
 		</div>
 			
