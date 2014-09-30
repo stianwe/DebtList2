@@ -17,7 +17,6 @@ function sendWithCredentials(page, data, success) {
 };
 
 function showFriends() {
-	window.currentPage = "#view-friends-page";
 	loadFriends();
 	$.mobile.changePage("#view-friends-page", { transition: "flow", changeHash: true });
 };
@@ -25,18 +24,17 @@ function showFriends() {
 function showDebts(reverseTransition, isNotPageChange) {
 	loadDebts();
 	if (!isNotPageChange) {
-		window.currentPage = "#front-page";
 		$.mobile.changePage("#front-page", { transition: "flow", changeHash: true, reverse: reverseTransition });
 	}
 };
 
 function swipe(event) {
 	if (event.type == "swipeleft") {
-		if (window.currentPage == "#front-page") {
+		if ($.mobile.activePage.attr("id") == "front-page") {
 			showFriends();
 		}
 	} else if (event.type == "swiperight") {
-		if (window.currentPage == "#view-friends-page") {
+		if ($.mobile.activePage.attr("id") == "view-friends-page") {
 			showDebts(true);
 		}
 	} else {
