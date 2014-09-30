@@ -101,4 +101,31 @@
 		return $response;
 	}
 
+	function createDebt($amount, $what, $comment, $fromUser, $toUser, $requestingUser) {
+		// First check that the requesting user is one of the to/from users
+		if ($fromUser != $requestingUser && $toUser != $requestingUser) {
+			return NOT_PERMITTED;
+		}
+		$query = "INSERT INTO debt " .
+				 "(amount, what, comment, fromUser, toUser, requestingUser, status) " .
+				 "VALUES " .
+				 "(?, ?, ?, ?, ?, ?, \"" . REQUESTED . "\")";
+		$mysqli = getMysqlInstance();
+		if (!($stmt = $mysqli->prepare($query))) {
+			logError("Prepare", $mysqli, $stmt);
+			return SQL_ERROR;
+		}
+		if (!($stmt->bind_param("dssiii", $amount, $what, $comment, $fromUser, $toUser, $requestingUser))) {
+			logError("Bind", $mysqli, $stmt);
+			return SQL_ERROR;
+		}
+		if (!($stmt->execute())) {
+			logError("Execute", $mysqli, $stmt);
+			return SQL_ERROR;
+		}
+		$stmt->close();
+		$mysqli->close();
+		return REQUESTED;
+	}
+
 ?>

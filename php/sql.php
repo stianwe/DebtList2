@@ -12,6 +12,7 @@
 	}
 
 	function logError($msg, $mysqli, $stmt) {
+		echo "LOGGING ERROR: " . $msg . " (" . $mysqli->errno . ") " . $stmt->error . "\n";
 		appendToFile("sql_log.txt", $msg . " failed: (" . $mysqli->errno . ") " . $stmt->error);
 	}
 
