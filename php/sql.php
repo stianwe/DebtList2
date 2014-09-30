@@ -11,17 +11,36 @@
 		return $mysqli;
 	}
 
+	function logError($msg, $mysqli, $stmt) {
+		appendToFile("sql_log.txt", $msg . " failed: (" . $mysqli->errno . ") " . $stmt->error);
+	}
+
 	function getUserId($username) {
 		$mysqli = getMysqlInstance();
 		$query = "SELECT id
 				  FROM user
-				  WHERE username=\"{$username}\"";
-		$userId = -1;
-		if ($res = $mysqli->query($query)) {
-			if ($row = $res->fetch_assoc()) {
-				$userId = $row["id"];
-			}
+				  WHERE username=?";
+		if (!($stmt = $mysqli->prepare($query))) {
+			logError("Prepare", $mysqli, $stmt);
+			return -1;
 		}
+		if (!($stmt->bind_param("s", $username))) {
+			logError("Bind", $mysqli, $stmt);
+			return -1;
+		}
+		if (!($stmt->execute())) {
+			logError("Execute", $mysqli, $stmt);
+			return -1;
+		}
+		$userId = -1;
+		if (!($res = $stmt->get_result())) {
+			logError("Get result", $mysqli, $stmt);
+			return -1;
+		}
+		if ($row = $res->fetch_assoc()) {
+			$userId = $row["id"];
+		}
+		$stmt->close();
 		$mysqli->close();
 		return $userId;
 	}
