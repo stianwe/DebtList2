@@ -20,3 +20,4 @@ Debt:
 3.  Completed by requesting user
 4.  Completed by other user
 5.  Completed
+6.  Deleted
