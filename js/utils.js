@@ -1,4 +1,4 @@
-var TIMEOUT = 6 * 1000;
+var TIMEOUT = 12 * 1000;
 
 function sendError(a, b, c) {
 	if (b == "timeout") {
