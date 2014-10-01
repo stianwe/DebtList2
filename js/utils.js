@@ -16,9 +16,11 @@ function send(page, data, success) {
 		dataType	:	"jsonp",
 		jsonp		:	"callback",
 		crossDomain	:	true,
-		success		:	success,
+		//beforeSend	: 	function () { console.log("Loading.."); $.mobile.loading('show'); },
+		// success		:	function (d) { console.log("done"); success(d); $.mobile.loading('hide'); },
+		success		: 	success,
 		timeout 	: 	TIMEOUT,
-		error		:	sendError
+		error		:	function (a, b, c) { sendError(a, b, c); },
 	});
 };
 
@@ -56,4 +58,6 @@ function enterPostLogin(userId) {
 	window.userId = userId;
 	showDebts(false);
 	$(document).on("swiperight swipeleft", swipe);
+	console.log("ATTEMPTING TO SHOW LOADER");
+	$.mobile.showPageLoadingMsg();
 };
