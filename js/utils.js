@@ -11,7 +11,7 @@ function sendError(a, b, c) {
 function send(page, data, success) {
 	$.ajax({
 		type		:	"GET",
-		url			:	"http://192.168.1.22/php/" + page,
+		url			:	"http://46.9.74.186/php/" + page,
 		data		:	"data=" + data,
 		dataType	:	"jsonp",
 		jsonp		:	"callback",
