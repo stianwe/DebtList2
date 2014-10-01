@@ -115,14 +115,36 @@ function initAddDebt() {
 	loadFriends(function (friends) {
 		friends.forEach(function (friend) {
 			if (parseInt(friend.status) == 1) {
-				$("#add-debt-friend").append("<option value=\"" + friend.id + "\">" + friend.username + "</option>");
+				var friendId = friend.otherUser == window.userId ? friend.requestingUser : friend.otherUser;
+				$("#add-debt-friend").append("<option value=\"" + friendId + "\">" + friend.username + "</option>");
 			}
 		});
 	});
 };
 
 function addDebtCallback(data) {
-	console.log("DATA: ", data);
+	switch (parseInt(data.response)) {
+		case 0: // Requested
+			// Debt created - send user back to front page
+			$.getScript("js/utils.js", function() {
+				showDebts(false);
+			});
+			break;
+		case -2: // Not permitted
+			alert("You don't have permission to do that.");
+			break;
+		case -3: // User not found
+			alert("SQL error.");
+			break;
+		case -4:
+			alert("Unkown status.");
+			break;
+		case -5:
+			alert("Invalid user credentials");
+			break;
+		default:
+			alert("Unexpected response from server. (Code: " + data.response + ")");
+	};
 };
 
 function addDebt() {
@@ -131,7 +153,6 @@ function addDebt() {
 		alert("Please select a friend.");
 		return;
 	}
-	console.log("FriendId=", friendId);
 	var toUserFromOther;
 	if ($("#radio-to-user").prop("checked")) {
 		toUserFromOther = true;
