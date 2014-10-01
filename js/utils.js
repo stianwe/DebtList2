@@ -1,14 +1,24 @@
+var TIMEOUT = 6 * 1000;
+
+function sendError(a, b, c) {
+	if (b == "timeout") {
+		alert("Network error: Cannot reach the server. Check your internet connection and try again later.");
+	} else {
+		alert("ERROR: " + a + ": " + b + ": " + c);
+	}
+}
 
 function send(page, data, success) {
 	$.ajax({
 		type		:	"GET",
-		url			:	"http://192.168.1.2/php/" + page,
+		url			:	"http://192.168.1.22/php/" + page,
 		data		:	"data=" + data,
 		dataType	:	"jsonp",
 		jsonp		:	"callback",
 		crossDomain	:	true,
 		success		:	success,
-		error		:	function(a, b, c) { alert("ERROR! " + a + " " + b + " " + c); }
+		timeout 	: 	TIMEOUT,
+		error		:	sendError
 	});
 };
 
