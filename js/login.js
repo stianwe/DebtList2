@@ -2,6 +2,8 @@ var USERNAME_COOKIE_NAME = "debtlist2_username";
 var PASSWORD_COOKIE_NAME = "debtlist2_password";
 
 function loginRecieveCallback (data) {
+	console.log("ATTEMPTING TO HIDE LOADER");
+	$.mobile.loading("hide");
 	if (data.id != -1) {
 		console.log("Logged in with id", data.id);
 		// Set cookies to allow auto-login if login was successful
@@ -23,6 +25,9 @@ function login(auto) {
 	} else {
 		console.log("Auto-login");
 	}
+	console.log("ATTEMPTING TO SHOW LOADER");
+	// $.mobile.loading("show");
+	// $.mobile.showPageLoadingMsg();
 	sendWithCredentials("login.php", "{}", loginRecieveCallback);
 };
 

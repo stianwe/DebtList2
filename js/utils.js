@@ -50,7 +50,7 @@ function swipe(event) {
 			showDebts(true);
 		}
 	} else {
-		console.log("Unexpected event: " + event.type);
+		console.log("Unexpected event: " + event.function);
 	}
 };
 
@@ -58,6 +58,4 @@ function enterPostLogin(userId) {
 	window.userId = userId;
 	showDebts(false);
 	$(document).on("swiperight swipeleft", swipe);
-	console.log("ATTEMPTING TO SHOW LOADER");
-	$.mobile.showPageLoadingMsg();
 };
